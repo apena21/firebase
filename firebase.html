@@ -14,6 +14,9 @@
         <!-- Javascript link -->
         <script type="text/javascript"></script>
 
+        <!-- Firebase link -->
+        <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+
         <title>Train Schedule</title>
 
     </head>
@@ -32,7 +35,7 @@
                     </div>
                     <div class="panel-body">
                         <!-- Tables -->
-                        <table class="table table-dark">
+                        <table id = "trainTable" class="table table-dark">
                             <thead>
                                 <tr>
                                     <th scope="col" id="head_trainNam">Train Name</th>
@@ -43,13 +46,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row" id=trainNam>Trenton Express</th>
-                                    <td id="dest">Trenton</td>
-                                    <td id="freq">25</td>
-                                    <td id="arrivals">05:35 PM</td>
-                                    <td id="min_away">10</td>
-                                </tr>                                        
+                            <!-- user inputs go here -->                                   
                             </tbody>
                         </table>
                     </div>
@@ -68,7 +65,7 @@
                         <form>
                             <div class="form-group">
                                 <label for="input_TrainName" >Train Name</label>
-                                <input type="trainName" class="form-control" id="input_TrainName" placeholder="">
+                                <input type="trainName" class="form-control" id="input_trainName" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="input_Destination">Destination</label>
@@ -76,13 +73,13 @@
                             </div>
                             <div class="form-group">
                                     <label for="first_train_time">First Train Time (HH:mm-miliary time)</label>
-                                    <input type="trainTime" class="form-control" id="input_TrainTime" placeholder="">
+                                    <input type="trainTime" class="form-control" id="input_trainTime" placeholder="">
                             </div>
                             <div class="form-group">
                                     <label for="freq">Frequency (min)</label>
                                     <input type="frequency" class="form-control" id="input_frequency" placeholder="">
                             </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button id = "add-train" type="submit" class="btn btn-default">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -90,6 +87,7 @@
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js"></script>
         <script src="assets/javascript/firebase.js"></script>
     </body>
 </html>

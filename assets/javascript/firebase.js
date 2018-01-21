@@ -1,52 +1,65 @@
-/*
-var trainArray = [{
-    trainNam: "Train Name",
-    dest:"Destination",
-    freq: "Frequency (min)",
-    arrivals: "Next Arrival",
-    min_away: "Minutes Away"
-}]
-*/
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCvv1ZvosD_-Vr8QftETt4F4NIVziFkNrs",
+    authDomain: "fir-homeworkweek7.firebaseapp.com",
+    databaseURL: "https://fir-homeworkweek7.firebaseio.com",
+    projectId: "fir-homeworkweek7",
+    storageBucket: "fir-homeworkweek7.appspot.com",
+    messagingSenderId: "956545903805"
+  };
+  firebase.initializeApp(config);
 
-var trainArray = [
-	["Trenton Express", "Trenton", "25", "05:35 PM", "10"],
-	["Oregon Trail", "Salem, Oregon", "3600", "01:39 PM", "1154"],
-];
+var userData = firebase.database().ref("train-info")
 
-// outer loop
-for (var i=0; i<trainArray.length; i++) {
-    // add/create table row
-    var tableRow = $("<tr>");
-    var innerArray = trainArray[i];
-        //inner loop of train info
-               
-		for (var j=0; j<innerArray.length; j++) {
-        //td = table cell;  
-        //use <> for html elements
-        // use ${} to push data to html
-            tableRow.append(`<td> ${innerArray[j]}</td>`);	
-		
-		console.log()
-        }
-    
-        $("tbody").append(tableRow);
+ userData.on("child_added", 
+    function(snapshot){
+        $("#trainTable").append(createEntry(snapshot.val()))
+    },
+    function(err){
+        console.log("There was an error retrieving the data")
+    }
+) 
 
+function createEntry(snapshot){
+    var row = $("<tr>")
+    var addTrainName = $("<td>")
+    var addDestination = $("<td>")
+    var addFirstTrainTime = $("<td>")
+    var addFrequency = $("<td>")
+    addTrainName.text(snapshot.addTrainName)
+    addDestination.text(snapshot.addDestination)
+    addFirstTrainTime.text(snapshot.addFirstTrainTime)
+    addFrequency.text(snapshot.addFrequency)
+    row.append(addTrainName, addDestination, addFrequency, "<td>N/A</td>", "<td>N/A</td>")
+    return row; 
+}
 
+$("#add-train").click(function(){
+    event.preventDefault()
+    console.log($("#input_trainName").val())
+    var trainName = $("#input_trainName").val().trim();
+    var destination = $("#input_destination").val().trim();
+    var arrivalTime = $("#input_trainTime").val().trim();
+    var frequency = $("#input_frequency").val().trim();
+    console.log(trainName, destination, arrivalTime, frequency)
+    var setUserData = {
+        addTrainName: trainName, 
+        adddestination: destination, 
+        addFirstTrainTime: arrivalTime,
+        addFrequency: frequency,
+        //code below slacked by professor in class
+        dateAdded: firebase.database.ServerValue.TIMESTAMP 
     }
 
-var now = moment();
+userData.push(setUserData)
+console.log(setUserData)
+})
 
-
-$("body").append(table);
 
 /*
-var trainTable = $('.table'),
-data = ["Train Name", "Destination", "Frequency (min)", "Next Arrival", "Minutes Away"];
-$.each(trainTable, function(i, trainTable) {
-var tr = $('<tr>');
-$.each(data, function(i, data) {
-$('<td>').html(trainTable[data]).appendTo(tr);  
-});
-trainTable.append(tr);
-});
+// partial code to add fields to the table
+$('#timesheet tr:last').after('<tr id="' + id + '"><td class="e-name">' + employees.name + 
+'</td><td class="e-role">' + employees.role + 
+'</td><td class="e-start">' + employees.start + 
+'</td><td id = "e-months" class="e-months"></td><td id="e-rate" class="e-rate"></td><td id="e-billed" class="e-billed"></td></tr>');
 */
