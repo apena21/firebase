@@ -1,6 +1,5 @@
 //to do:  get help resetting input fields after the submit button is pressed. 
 // get help with moment js (see line 89 of code) 
-// ask how to reset the firebase db
   
   // Initialize Firebase
   var config = {
@@ -69,7 +68,7 @@ function createEntry(snapshot){
     addDestination.text(snapshot.addDestination)
     addFirstTrainTime.text(snapshot.addFirstTrainTime)
     addFrequency.text(snapshot.addFrequency)
-    row.append(addTrainName, addDestination, addFrequency, "<td>N/A</td>", "<td>N/A</td>");
+    row.append(addTrainName, addDestination, addFrequency, "<td>N/A</td>", "<td>N/A</td>")
     return row; 
 }
 
@@ -82,24 +81,14 @@ $("#add-train").click(function(){
     var frequency = $("#input_frequency").val().trim();
     console.log(trainName, destination, arrivalTime, frequency)
     var setUserData = {
-        addTrainName: trainName,
+        addTrainName: trainName, 
         addDestination: destination, 
         addFirstTrainTime: arrivalTime,
         addFrequency: frequency,
-    
-    
-        /*
-         // format first train time to military time
-         moment($("#input_trainTime").format("HH:mm"));
-         */
-    }  
-    
-    var nextArrival = console.log("next arrival time is:" + )
-    var input_trainName = $("#input_trainTime");
-    console.log(input_trainName);
-    console.log("moment time is:" + moment(input_trainName).format("H HH"));
-    console.log(moment("0500").format("HH:mm"));
 
+         // format first train time to military time
+         moment($("#input_trainTime").format("kk mm"));
+    }    
      
 userData.push(setUserData);
 resetInputs();
@@ -108,10 +97,10 @@ console.log(setUserData);
 
 //reset inputs on form
 function resetInputs()  {
-    $("#input_trainName").empty();
-    $("#input_destination").empty();
-    $("#input_trainTime").empty();
-    $("#input_frequency").empty();
+    $("#input_trainName").value= "";
+    $("#input_destination").value = "";
+    $("#input_trainTime").value = "";
+    $("#input_frequency").value = "";
     
 }
 
